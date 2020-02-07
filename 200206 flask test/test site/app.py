@@ -54,8 +54,22 @@ def image():
     if request.method == 'POST':
         data = request.get_json()
         print(data)
-        dat = json.loads(data)
-        print(dat['a'])
+        print(data[0])
+        for i in data:
+            i = json.loads(i)
+            item_name = i['item']
+            x = i['x']
+            y = i['y']
+            z = i['z']
+            cursor = db.cursor()
+            item_sql = f"UPDATE USER_ITEM SET X_ITEM = {x}, Y_ITEM = {y}, Z_ITEM = {z} where ITEMID = '{item_name}'"
+             
+            cursor.execute(item_sql)
+            cursor.fetchall() 
+            
+            
+            
+
     return jsonify(data)
         # return render_template('/container.html')
 
