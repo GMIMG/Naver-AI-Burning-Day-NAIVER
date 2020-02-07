@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Flask Index</title>
+    <style>
+        .wrapper {
+            width: 80%;
+            min-width: 400px;
+            margin: auto;
+        }
+        .image-upload{
+            text-align: center;
+        }
+    
+    </style>
+    <script>
+
+    </script>
+</head>
+<body>
+
+    <header>
+        <div>
+            무엇이든 물어보세요 만물도감
+        </div>
+    </header>
+    <nav>
+        <div>
+            <ul>
+                <li>
+                    Home
+                </li>
+                <li>
+                    로그아웃
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+
+    <main>
+        <div class = 'wrapper'>
+            <div class = 'image-upload'>
+                <form action = "/fileUpload" method = "POST" enctype = "multipart/form-data">
+                    <input type = "file" name = "file" />
+                    <input type = "submit"/>
+                </form>
+            </div>
+        </div>
+    </main>
+
+
+</body>
+</html>
