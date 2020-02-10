@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jQuery UI Resizable - Default functionality</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+  <style>
+    #up {
+      position :fixed;
+      top:0;
+      left:0;
+      height: 50vh;
+      background-color: red;
+      width: 100vw;
+    }
+    #down {
+      position :fixed;
+      bottom:0;
+      left:0;
+      height: 50vh;
+      background-color: red;
+      width: 100vh;
+    }
+  </style>
+    <script
+    src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  $(window).on('click',function(){
+    $('#up').slideToggle();
+    //$('#down').slideDown();
+  });
+  </script>
+</head>
+<body>
+ 
+  <h3 class="ui-widget-header">Resizable</h3>
+  <div id='up'>
+  </div>
+  <div id='down'></div>
+
+ 
+ 
+</body>
+</html>

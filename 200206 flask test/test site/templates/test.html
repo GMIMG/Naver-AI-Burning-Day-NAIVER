@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>jQuery slideLeft and slideRight Effect</title>
+<style>
+    .setting{
+      
+        overflow: hidden;
+        background: #f0e68c;
+    }
+    .setting-inner{
+        width: 100vw;
+        padding: 10px;
+        border: 1px solid #a29415;
+    }
+</style>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script>
+    $(document).ready(function(){
+        var boxWidth = $(".setting").width();
+        $(".slide-left").click(function(){
+            $(".setting").animate({width: 'toggle'});
+        });
+    });
+</script>
+</head>
+<body>
+    <div type="button" class="slide-left">
+        kk
+    <div class="setting">
+        <div class="setting-inner">Lorem ipsum dolor sit amet...</div>
+    </div>
+</div>
+</body>
+</html>
