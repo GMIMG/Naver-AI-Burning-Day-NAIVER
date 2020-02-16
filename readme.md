@@ -19,10 +19,10 @@ by NAVER-AI-BURNING-DAY
 
 - Anaconda 4.8.0
 - PYTHON 3.7
-- pip requirments
 - flask 1.0.2
 - pymysql
 - MySQL80
+- tensorflow 1.15
 
 
 
