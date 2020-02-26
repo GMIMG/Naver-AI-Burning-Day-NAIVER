@@ -14,11 +14,10 @@ services:
     image: mysql:8.0
     environment: 
       - MYSQL_ROOT_PASSWORD=1234
-      - MYSQL_DATABASE_NAME=tests
+      - MYSQL_DATABASE=tests
     command: mysqld
     volumes: 
       - test-volume:/var/lib/mysql/data
       
 volumes: 
   test-volume:
-

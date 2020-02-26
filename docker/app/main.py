@@ -51,41 +51,43 @@ def prediction():
         response_json = json.loads(response.text)
         response_list = response_json['predictions']
         if response_list[0]['num_detections'] != 0:
-            print(response_list)
+            # print(response_list)
             detection_names = response_list[0]['detection_names'][0]
         else:
             return render_template("error.html")
     else:
         return render_template("error.html")
 
-    ########### 소분류될 카테고리
+    ############ keras 분석
     small_category_lst = {
         'dog' : ["Chao", "Chihuahua", "Siberia"],
         'car' : ["Sonata", "Starex", "Avante"],
         'laptop' : ["LG", "Hansung", "Mac"],
         'cat' : ["Sphinx", "Scotishfold", "Korea"]
     }
-    ############ keras 분석
-    print('모델가져오는즁')
     if detection_names in small_category_lst: # 소분류 모델이 없을때 not in
+        print('모델가져오는중')
         model = tensorflow.keras.models.load_model('./static/keras_model/keras_model_'+ detection_names + '.h5')
+        print(model)
         print('완료')
         data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
         image = Image.open(name)
         image_array = np.asarray(image)
         normalized_image_array = (image_array.astype(np.float32) / 127.0) - 1
         data[0] = normalized_image_array
+        print('예측중')
         prediction = model.predict(data)
+        print('예측완료')
         result = small_category_lst[detection_names][np.argmax(prediction[0])]
     else :
-        print(detection_names)
+        # print(detection_names)
         result = detection_names
         pass
     
     ############ mysql에서 ITEM table의 ITEMID 값을 가져옴
     db = pymysql.connect(host="dbdb", user="root",passwd="1234", db='tests', port=3306)
     cursor = db.cursor()
-    item_sql = "select * from ITEM where ITEMID = '" + result + "'"
+    item_sql = "select * from item where ITEMID = '" + result + "'"
     cursor.execute(item_sql)
     rows=cursor.fetchall()
     if len(rows) == 0:
@@ -100,14 +102,13 @@ def prediction():
 @app.route('/add', methods = ['GET', 'POST'])
 def add():
     data = request.get_json()
-    print(data)
+    # print(data)
     smallCategory = data['smallCategory']
-
     db = pymysql.connect(host="dbdb", user="root",passwd="1234", db='tests', port=3306)
     cursor = db.cursor()
-    add_sql = "select * from USER_ITEM where ITEMID = '" + smallCategory + "'"
-    cursor.execute(add_sql)
-    rows=cursor.fetchall()
+    # add_sql = "select * from user_item where ITEMID = '" + smallCategory + "'"
+    # cursor.execute(add_sql)
+    # rows=cursor.fetchall()
     add_sql = "INSERT INTO `user_item` (`USERID`, `ITEMID`, `X_ITEM`, `Y_ITEM`, `Z_ITEM`, `WIDTH`, `HEIGHT`) VALUES ('admin', '" + smallCategory + "', '30', '30', '99', '30', '30')"
     cursor.execute(add_sql)
     rows=cursor.fetchall()
@@ -119,17 +120,17 @@ def add():
 @app.route('/show', methods = ['GET', 'POST'])
 def show():
     data = request.get_json()
-    print(data)
+    # print(data)
     INDEX_ITEM = data['INDEX_ITEM']
     if data['s'] == '0':
         s = 0
     else:
         s = 1
-    print(s)
+    # print(s)
 
     db = pymysql.connect(host="dbdb", user="root",passwd="1234", db='tests', port=3306)
     cursor = db.cursor()
-    show_sql = f"update USER_ITEM SET s = '{s}' where INDEX_ITEM = '{INDEX_ITEM}'"
+    show_sql = f"update user_item SET s = '{s}' where INDEX_ITEM = '{INDEX_ITEM}'"
     cursor.execute(show_sql)
     db.commit()
     db.close()
@@ -145,14 +146,14 @@ def show():
 def container():
     db = pymysql.connect(host="dbdb", user="root",passwd="1234", db='tests', port=3306)
     cursor = db.cursor()
-    backcolor_sql = "select * from USER_SETTING where USERID = 'admin'" 
+    backcolor_sql = "select * from user_setting where USERID = 'admin'" 
     cursor.execute(backcolor_sql)
     rows=cursor.fetchall()
     row_headers=[x[0] for x in cursor.description]
     backcolor = dict(zip(row_headers,rows[0]))['repo_color']
     #print(backcolor)
     # 데이터베이스에서 사용자 이미지 가져오기
-    item_sql = "select * from USER_ITEM where USERID = 'admin' AND s = 1" 
+    item_sql = "select * from user_item where USERID = 'admin' AND s = 1" 
     cursor.execute(item_sql)
     rows=cursor.fetchall() 
     row_headers=[x[0] for x in cursor.description]
@@ -179,7 +180,7 @@ def image():
 
             db = pymysql.connect(host="dbdb", user="root",passwd="1234", db='tests', port=3306)
             cursor = db.cursor()
-            item_sql = f"UPDATE USER_ITEM SET X_ITEM = {x}, Y_ITEM = {y}, Z_ITEM = {z}, WIDTH = {width}, HEIGHT = {height} where (INDEX_ITEM = '{INDEX_ITEM}')"
+            item_sql = f"UPDATE user_item SET X_ITEM = {x}, Y_ITEM = {y}, Z_ITEM = {z}, WIDTH = {width}, HEIGHT = {height} where (INDEX_ITEM = '{INDEX_ITEM}')"
             cursor.execute(item_sql)
             db.commit()
             db.close()
@@ -194,7 +195,7 @@ def backcolor():
         cursor = db.cursor()
         # 데이터베이스에서 사용자 이미지 가져오기
         data = request.get_json()
-        item_sql = f"update USER_SETTING SET repo_color = '{data['backcolor']}' where USERID = 'admin'"
+        item_sql = f"update user_setting SET repo_color = '{data['backcolor']}' where USERID = 'admin'"
         cursor.execute(item_sql)
         db.commit()
         db.close()
@@ -215,7 +216,7 @@ def storage():
     db = pymysql.connect(host="dbdb", user="root",passwd="1234", db='tests', port=3306)
     cursor = db.cursor()
     ############ 데이터베이스에서 사용자 이미지 가져오기
-    item_sql = "select * from USER_ITEM where USERID = 'admin'" 
+    item_sql = "select * from user_item where USERID = 'admin'" 
     cursor.execute(item_sql)
     rows=cursor.fetchall() 
     row_headers=[x[0] for x in cursor.description]
@@ -224,11 +225,9 @@ def storage():
         json_data.append(dict(zip(row_headers,result)))
     cursor.close()
     db.close()
-    print(json_data)
+    # print(json_data)
     return render_template('storage.html',json_data = json_data)
-
-
 
 if __name__ == '__main__':
     #서버 실행
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0')
