@@ -5,6 +5,8 @@ by NAVER-AI-BURNING-DAY
 - 팀명 : NAIVER
 - 팀원 : 황지민, 정용주, 전현진, 권윤옥
 
+
+
 ## 프로젝트 소개
 
 ![flow](readme/flow.png)
@@ -72,3 +74,10 @@ by NAVER-AI-BURNING-DAY
 
 ![setting3](readme/setting3.png)
 
+
+
+## 배포
+
+http://27.96.135.96:8080
+
+해커톤에서 수상하지는 못했지만 약간 다듬어서 네이버 클라우드 서버에 배포했습니다. 무료서버라서 케라스 모델을 로드하는 부분이 조금 오래걸립니다(20초정도).
