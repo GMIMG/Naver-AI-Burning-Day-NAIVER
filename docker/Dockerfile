@@ -1,6 +1,7 @@
 FROM tiangolo/uwsgi-nginx-flask:python3.6
+ENV NGINX_MAX_UPLOAD 1m
 COPY requirements.txt /tmp/
-COPY ./data /data
-RUN pip install -r /tmp/requirements.txt && \
+RUN pip install --upgrade pip && \
+	pip install -r /tmp/requirements.txt && \
 	rm /tmp/requirements.txt
 COPY ./app /app

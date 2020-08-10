@@ -2,22 +2,21 @@ version: '3.7'
 
 services:
   web:
-    image: ask-anything-dictionary
+    image: gmimg/ask-anything-dictionary
     ports:
       - "80:80"
+    environment: 
+      - client_id=${client_id}
+      - client_secret=${client_secret}
     links: 
       - mysql:dbdb
-    volumes: 
-      - test-volume:/data
 
   mysql:
     image: mysql:8.0
+    volumes: 
+      - "./init/:/docker-entrypoint-initdb.d/"
     environment: 
+      - LANG=C.UTF-8
       - MYSQL_ROOT_PASSWORD=1234
       - MYSQL_DATABASE=tests
     command: mysqld
-    volumes: 
-      - test-volume:/var/lib/mysql/data
-      
-volumes: 
-  test-volume:

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os
 from flask import Flask, render_template, request, jsonify, session, redirect, url_for, redirect
 import json
 import pymysql
@@ -7,10 +8,11 @@ import tensorflow.keras
 from PIL import Image, ImageOps
 import numpy as np
 
-app = Flask(__name__)
 
-client_id = "cbxhzui4en"
-client_secret = "m7YcN6l15L4l4hSgVRTfAiArIHbEK8S384Q55fIX"
+client_id = os.environ["client_id"]
+client_secret = os.environ["client_secret"]
+
+app = Flask(__name__)
 
 @app.route('/')
 def index():

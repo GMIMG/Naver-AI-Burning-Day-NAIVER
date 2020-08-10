@@ -1,4 +1,3 @@
-CREATE DATABASE tests default CHARACTER SET UTF8;
 CREATE TABLE `user_item` (
   `INDEX_ITEM` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `USERID` varchar(20) NOT NULL,
@@ -21,7 +20,8 @@ insert into user_setting values ('admin', '#ffffff');
 
 CREATE TABLE `tests`.`item` (
   `ITEMID` VARCHAR(20) NOT NULL,
-  `ITEMDESC` VARCHAR(200) NULL);
+  `ITEMDESC` VARCHAR(4000) NULL
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
   
   
 insert into item values('Chao','차우차우는 중국에서 유래하였으며, 사자를 닮은 견종이다. 다부지고 짧은 체형에 균형이 잘 잡혀 있다. 조용하고 충성심이 강하다.');
