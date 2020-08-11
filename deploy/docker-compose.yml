@@ -16,7 +16,6 @@ services:
     build: ./flask
     ports:
       - "5000:5000"
-      
     networks:
       - backend
     environment: 
