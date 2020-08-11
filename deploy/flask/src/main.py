@@ -230,6 +230,6 @@ def storage():
     # print(json_data)
     return render_template('storage.html',json_data = json_data)
 
-if __name__ == '__main__':
-    #서버 실행
-    app.run(host='0.0.0.0')
+# if __name__ == '__main__':
+#     #서버 실행
+#     app.run(host='0.0.0.0')

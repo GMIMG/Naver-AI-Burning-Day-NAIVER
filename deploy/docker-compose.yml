@@ -1,16 +1,30 @@
 version: '2'
 
 services:
-  web:
-    image: ask-anything-dictionary
-    ports:
+  nginx:
+    image: ask-anything-dictionary-nginx
+    build: ./nginx
+    networks:
+      - backend
+    ports: 
       - "80:80"
+    depends_on: 
+      - flask
+
+  flask:
+    image: ask-anything-dictionary-app
+    build: ./flask
+    ports:
+      - "5000:5000"
+      
+    networks:
+      - backend
     environment: 
       - client_id=${client_id}
       - client_secret=${client_secret}
     links: 
       - mysql:dbdb
-
+      
   mysql:
     image: mysql:8.0
     volumes: 
@@ -20,3 +34,9 @@ services:
       - MYSQL_ROOT_PASSWORD=1234
       - MYSQL_DATABASE=tests
     command: mysqld
+    networks:
+        - backend
+
+networks:
+  backend:
+    driver: bridge
