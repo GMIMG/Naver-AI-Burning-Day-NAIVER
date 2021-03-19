@@ -3,7 +3,7 @@ uWSGI==2.0.19
 tensorflow==1.15.2
 PyMySQL==0.9.3
 json5==0.8.5
-Pillow==6.2.0
+Pillow==8.1.1
 requests==2.22.0
 numpy==1.16.5
 cryptography==3.0
