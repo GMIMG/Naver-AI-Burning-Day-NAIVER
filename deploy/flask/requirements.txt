@@ -1,6 +1,6 @@
 Flask==1.1.2
 uWSGI==2.0.19
-tensorflow==1.15.2
+tensorflow==2.5.0
 PyMySQL==0.9.3
 json5==0.8.5
 Pillow==6.2.0
